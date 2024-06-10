@@ -1,4 +1,6 @@
+
 import { PrismaClient } from '@prisma/client';
+
 
 export const prisma = new PrismaClient({
   log: [
@@ -7,6 +9,7 @@ export const prisma = new PrismaClient({
       level: 'query'
     }
   ]
+
 });
 
 //log on in dev env
@@ -17,3 +20,4 @@ if (process.env.NEXT_PUBLIC_NODE_ENV === 'dev') {
     console.log('Duration: ' + e.duration + 'ms');
   });
 }
+

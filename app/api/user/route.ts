@@ -1,3 +1,4 @@
+
 export const dynamic = 'force-dynamic'
 import { prisma } from '@/config/prisma/db';
 import { NextApiResponse } from 'next';

@@ -13,8 +13,11 @@ import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/icons";
+import { signOut, useSession } from "next-auth/react";
 
 export const Navbar = () => {
+  const { data: session, status } = useSession();
+
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -48,14 +51,18 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden md:flex">
           <div className="flex flex-col items-center justify-center">
-            <h1 className="text-lg font-bold">XYZ@gmail.com</h1>
-            <h1 className="text-sm">Role: Teacher</h1>
+            <h1 className="text-lg font-bold">{session?.user?.email}</h1>
+            <h1 className="text-sm">
+              {" "}
+              Role: {session?.user?.role === "teacher" ? "Teacher" : "Student"}
+            </h1>
           </div>
           <div className="w-3" />
           <Button
             className="text-sm font-normal text-default-600 bg-default-100"
             variant="flat"
             color="primary"
+            onClick={() => signOut({ callbackUrl: "/" })}
           >
             Logout
           </Button>

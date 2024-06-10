@@ -1,9 +1,11 @@
 "use client";
 
 import { InputField } from "@/components/custom-field";
+import { loginValidationSchema } from "@/config/constant";
 import { Button } from "@nextui-org/button";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter();
@@ -16,9 +18,21 @@ const Login = () => {
             email: "",
             password: "",
           }}
-          // validationSchema={loginValidationSchema}
-          onSubmit={(values) => {
-            router.push("/dashboard");
+          validationSchema={loginValidationSchema}
+          onSubmit={async (values, { setSubmitting, setFieldError }) => {
+            const result = await signIn("credentials", {
+              redirect: false,
+              email: values.email,
+              password: values.password,
+            });
+
+            if (result?.error) {
+              setFieldError("email", "Invalid username or password.");
+              setFieldError("password", "Invalid username or password.");
+            } else {
+              window.location.href = "/dashboard";
+            }
+            setSubmitting(false);
           }}
         >
           <Form>

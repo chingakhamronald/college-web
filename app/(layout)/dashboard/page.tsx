@@ -8,7 +8,9 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Chip,
 } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function Home() {
   // if (isLoading || isLoadingUserData) {
@@ -25,33 +27,61 @@ export default function Home() {
         <Table isStriped aria-label="Example static collection table">
           <TableHeader>
             <TableColumn>NAME</TableColumn>
-            <TableColumn>ROLE</TableColumn>
+            <TableColumn>SUBJECT</TableColumn>
             <TableColumn>STATUS</TableColumn>
+            <TableColumn>ACTION</TableColumn>
           </TableHeader>
           <TableBody>
-            <TableRow key="1">
-              <TableCell>Tony Reichert</TableCell>
-              <TableCell>CEO</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Zoey Lang</TableCell>
-              <TableCell>Technical Lead</TableCell>
-              <TableCell>Paused</TableCell>
-            </TableRow>
-            <TableRow key="3">
-              <TableCell>Jane Fisher</TableCell>
-              <TableCell>Senior Developer</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell>William Howard</TableCell>
-              <TableCell>Community Manager</TableCell>
-              <TableCell>Vacation</TableCell>
-            </TableRow>
+            {data.map((e: any) => {
+              return (
+                <TableRow key={e.id}>
+                  <TableCell>{e.name}</TableCell>
+                  <TableCell>{e.subject}</TableCell>
+                  <TableCell>
+                    {
+                      <Chip
+                        color={e.status ? "success" : "danger"}
+                        variant="flat"
+                        key={e.id}
+                      >
+                        {e.status ? "Completed" : "Pending"}
+                      </Chip>
+                    }
+                  </TableCell>
+                  <TableCell>
+                    <div className="relative flex items-center gap-4">
+                      <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                        <Link href={"/review"}>Review</Link>
+                      </span>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </div>
     </>
   );
 }
+
+const data = [
+  {
+    id: 1,
+    name: "John",
+    subject: "Programming language",
+    status: true,
+  },
+  {
+    id: 2,
+    name: "Jane",
+    subject: "Dynamics",
+    status: true,
+  },
+  {
+    id: 3,
+    name: "Bob",
+    subject: "Data Science",
+    status: false,
+  },
+];

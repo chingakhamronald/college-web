@@ -1,8 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { AssignmentForm } from "./_component/assignmentForm";
-import { StudentForm } from "./_component/studentForm";
+import { AssignmentForm } from "./_component/assignment-form";
+import { StudentForm } from "./_component/student-form";
 
 const Assignments = () => {
   const { data: session } = useSession();
@@ -40,7 +40,7 @@ const Assignments = () => {
 
   return (
     <div className="p-8">
-      {session?.user.role === "student" ? <AssignmentForm /> : <StudentForm />}
+      {session?.user.role === "teacher" ? <AssignmentForm /> : <StudentForm />}
     </div>
   );
 };

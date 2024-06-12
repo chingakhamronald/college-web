@@ -33,7 +33,10 @@ export const AssignmentForm = () => {
                   value={values.question}
                   onChange={(e) => setFieldValue("question", e.target.value)}
                 />
-                <InputField id="semester" name="semester" label="Semester" />
+                <div className="flex flex-row gap-4">
+                  <InputField id="subject" name="subject" label="Subject" />
+                  <InputField id="semester" name="semester" label="Semester" />
+                </div>
               </div>
               <div className="text-center mt-5">
                 <Button type="submit">Submit</Button>

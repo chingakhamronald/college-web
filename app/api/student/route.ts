@@ -4,23 +4,21 @@ import { prisma } from '../../../config/prisma/db';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const teacherId = searchParams.get('teacherId');
-  if (teacherId) {
-    let result = await prisma.teacher.findMany({
+  const department = searchParams.get('department');
+
+  const semester = searchParams.get('semester');
+  console.log('department__________', department);
+  if (department && semester) {
+    let result = await prisma.student.findMany({
       where: {
-        project: {
-          some: {
-            teacher: {
-              id: teacherId
-            }
-          }
-        }
+        department: department,
+        semester: semester
       }
     });
     console.log('res', result);
     return NextResponse.json(result);
   }
-  let result = await prisma.teacher.findMany();
+  let result = await prisma.student.findMany();
   console.log('res', result);
   return NextResponse.json(result);
 }

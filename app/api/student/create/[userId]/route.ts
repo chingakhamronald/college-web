@@ -48,7 +48,7 @@ function getUser(userId: string) {
 }
 function getTeacher(userId: string) {
   // console.log({ userId____: userId });
-  return prisma.teacher.findUnique({
+  return prisma.student.findUnique({
     where: { userId: userId }
   });
 }

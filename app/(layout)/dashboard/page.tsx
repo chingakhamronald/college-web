@@ -8,7 +8,12 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Chip,
 } from "@nextui-org/react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import StudentList from "../assignments/_component/student-list";
+import AssignmentList from "../assignments/_component/assignment-list";
 
 export default function Home() {
   // if (isLoading || isLoadingUserData) {
@@ -19,39 +24,38 @@ export default function Home() {
   //   );
   // }
 
+  const { data: session } = useSession();
+
   return (
     <>
       <div className="w-full my-5 flex justify-around align-middle flex-wrap lg:flex-nowrap">
-        <Table isStriped aria-label="Example static collection table">
-          <TableHeader>
-            <TableColumn>NAME</TableColumn>
-            <TableColumn>ROLE</TableColumn>
-            <TableColumn>STATUS</TableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow key="1">
-              <TableCell>Tony Reichert</TableCell>
-              <TableCell>CEO</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Zoey Lang</TableCell>
-              <TableCell>Technical Lead</TableCell>
-              <TableCell>Paused</TableCell>
-            </TableRow>
-            <TableRow key="3">
-              <TableCell>Jane Fisher</TableCell>
-              <TableCell>Senior Developer</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell>William Howard</TableCell>
-              <TableCell>Community Manager</TableCell>
-              <TableCell>Vacation</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        {session?.user?.role === "teacher" ? (
+          <StudentList />
+        ) : (
+          <AssignmentList />
+        )}
       </div>
     </>
   );
 }
+
+export const data = [
+  {
+    id: 1,
+    name: "John",
+    subject: "Programming language",
+    status: true,
+  },
+  {
+    id: 2,
+    name: "Jane",
+    subject: "Dynamics",
+    status: true,
+  },
+  {
+    id: 3,
+    name: "Bob",
+    subject: "Data Science",
+    status: false,
+  },
+];

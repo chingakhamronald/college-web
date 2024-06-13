@@ -14,7 +14,6 @@ const AssignmentList = () => {
   return (
     <Table isStriped aria-label="Example static collection table">
       <TableHeader>
-        <TableColumn>NAME</TableColumn>
         <TableColumn>TEACHER</TableColumn>
         <TableColumn>SUBJECT</TableColumn>
         <TableColumn>ACTION</TableColumn>
@@ -23,13 +22,12 @@ const AssignmentList = () => {
         {data.map((e: any) => {
           return (
             <TableRow key={e.id}>
-              <TableCell>{e.name}</TableCell>
               <TableCell>{e.teacher}</TableCell>
               <TableCell>{e.subject}</TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-4">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                    <Link href={"/review"}>Review</Link>
+                    <Link href={"/review"}>View & Upload</Link>
                   </span>
                 </div>
               </TableCell>

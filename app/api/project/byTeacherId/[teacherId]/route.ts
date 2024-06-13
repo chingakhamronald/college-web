@@ -21,6 +21,7 @@ export async function POST(
     const body = await req.json();
     const teacherId = params.teacherId;
     const { name, semester, subject } = body;
+    console.log({ Parammm____: params, BODY____: body });
     // const user = await getUser(userId);
     const teacher = await getTeacher(teacherId);
     // if (teacher) {
@@ -45,7 +46,8 @@ export async function POST(
   }
 }
 function getTeacher(id: string) {
-  return prisma.user.findUnique({
+  console.log({ ID____: id });
+  return prisma.teacher.findUnique({
     where: { id }
   });
 }

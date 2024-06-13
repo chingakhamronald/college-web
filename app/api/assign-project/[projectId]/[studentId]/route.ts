@@ -29,10 +29,30 @@ export async function POST(
     // if (!user) {
     //   return NextResponse.json({ error: 'User not Found' });
     // }
+    const teacher = await prisma.teacher.findFirst({
+      where: {
+        project: {
+          some: {
+            id: projectId
+          }
+        }
+      }
+    });
+    console.log({ TEACHER: teacher });
+
+    const project = await prisma.project.findUnique({
+      where: { id: projectId }
+    });
+    const student = await prisma.student.findUnique({
+      where: { id: studentId }
+    });
+    if (!project || !student) {
+      return NextResponse.json({ error: 'project or student not found' });
+    }
 
     const createTeacher = await prisma.assignProject.create({
       data: {
-        assignedBy,
+        assignedBy: teacher?.name ?? '',
         projectId,
         studentId
       }

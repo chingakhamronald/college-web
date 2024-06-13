@@ -1,17 +1,14 @@
-
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 import { prisma } from '@/config/prisma/db';
 import { NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { options } from '../auth/[...nextauth]/options';
 
-
 export async function POST(req: Request, res: NextApiResponse) {
-  console.log('user data', req.body)
-  const user = await req.json()
-  console.log('user: ', user)
-
+  console.log('user data', req.body);
+  const user = await req.json();
+  console.log('user: ', user);
 
   let result = await prisma.user.upsert({
     where: {
@@ -19,17 +16,16 @@ export async function POST(req: Request, res: NextApiResponse) {
     },
     create: user,
     update: user
-  })
+  });
 
-  return NextResponse.json(result)
+  return NextResponse.json(result);
 }
 
 export async function GET(req: Request) {
-
-  const session = await getServerSession(options)
-  if (!session) {
-    return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
-  }
+  // const session = await getServerSession(options)
+  // if (!session) {
+  //   return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  // }
 
   let result = await prisma.user.findMany({
     select: {
@@ -39,7 +35,7 @@ export async function GET(req: Request) {
       student: true,
       teacher: true
     }
-  })
+  });
 
-  return NextResponse.json(result)
+  return NextResponse.json(result);
 }

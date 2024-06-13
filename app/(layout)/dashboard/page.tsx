@@ -43,18 +43,21 @@ export const data = [
   {
     id: 1,
     name: "John",
+    semester: "Semester 1",
     subject: "Programming language",
     status: true,
   },
   {
     id: 2,
     name: "Jane",
+    semester: "Semester 2",
     subject: "Dynamics",
     status: true,
   },
   {
     id: 3,
     name: "Bob",
+    semester: "Semester 3",
     subject: "Data Science",
     status: false,
   },

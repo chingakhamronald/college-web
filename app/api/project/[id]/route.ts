@@ -5,7 +5,10 @@ import { prisma } from '../../../../config/prisma/db';
 export async function GET(req: Request, { params }: { params: any }) {
   const { id } = params;
   let result = await prisma.project.findUnique({
-    where: { id: id }
+    where: { id: id },
+    include: {
+      assignProject: { select: { student: true } }
+    }
   });
   if (!result) {
     return NextResponse.json({ error: 'Not Found' }, { status: 404 });

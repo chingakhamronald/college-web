@@ -2,11 +2,18 @@
 
 import { InputField } from "@/components/custom-field";
 import { initialValues, validationSchema } from "@/config/constant";
+import { useMutationAssignProject } from "@/hook/useMutationAssignProject";
+import { IQuestionProps } from "@/types";
 import { Button, Card, Textarea } from "@nextui-org/react";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export const AssignmentForm = () => {
+  const { mutateAssignProject, isPendingAssignProject } =
+    useMutationAssignProject("3a44b9cb-36b1-46a5-9e8b-34d678f29b42");
+
+  const router = useRouter();
   return (
     <div>
       <Card className="p-6" shadow="sm">
@@ -15,10 +22,9 @@ export const AssignmentForm = () => {
           enableReinitialize={true}
           validationSchema={validationSchema}
           initialValues={initialValues}
-          onSubmit={(e) => {
-            console.log({ "e...": e });
-
-            // mutation.mutate(e);
+          onSubmit={(e: IQuestionProps) => {
+            mutateAssignProject(e);
+            router.push("/dashboard");
           }}
         >
           {({ setFieldValue, values }) => (
@@ -30,8 +36,8 @@ export const AssignmentForm = () => {
                   fullWidth
                   variant="bordered"
                   className="mb-4"
-                  value={values.question}
-                  onChange={(e) => setFieldValue("question", e.target.value)}
+                  value={values.name}
+                  onChange={(e) => setFieldValue("name", e.target.value)}
                 />
                 <div className="flex flex-row gap-4">
                   <InputField id="subject" name="subject" label="Subject" />
@@ -39,7 +45,9 @@ export const AssignmentForm = () => {
                 </div>
               </div>
               <div className="text-center mt-5">
-                <Button type="submit">Submit</Button>
+                <Button type="submit" isLoading={isPendingAssignProject}>
+                  Submit
+                </Button>
               </div>
             </Form>
           )}

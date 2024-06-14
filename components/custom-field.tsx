@@ -10,8 +10,6 @@ interface InputFieldProps extends InputProps {
 }
 
 export const InputField: FC<InputFieldProps> = ({ label, ...props }) => {
-  console.log({ props: props, label: label });
-
   const [field, meta] = useField(props.name);
 
   return (

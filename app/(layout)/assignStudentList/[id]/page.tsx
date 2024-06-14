@@ -14,8 +14,22 @@ import {
   Button,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useQueryProjectById } from "@/hook/useQueryProjectById";
+import moment from "moment";
 
-const AssignStudentList = () => {
+const AssignStudentList = ({ params }: { params: { id: string } }) => {
+  console.log({ "Id,....": params.id });
+
+  const { dataProjectById, isLoadingProjectById } = useQueryProjectById(
+    params.id
+  );
+
+  console.log({ dataProjectById: dataProjectById });
+
+  if (isLoadingProjectById) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="mt-4">
       <Card className="p-6" shadow="sm">
@@ -30,10 +44,9 @@ const AssignStudentList = () => {
             <Card className="flex-1">
               <CardBody>
                 <h4 className="font-bold text-large">Question Details</h4>
-                <p>Subject: {data.subject}</p>
-                <p>Semester: {data.semester}</p>
-                <p>Department: {data.department}</p>
-                <p>Question: {data.question}</p>
+                <p>Subject: {dataProjectById.subject}</p>
+                <p>Semester: {dataProjectById.semester}</p>
+                <p>Question: {dataProjectById.name}</p>
               </CardBody>
             </Card>
           </div>
@@ -46,11 +59,15 @@ const AssignStudentList = () => {
                 <TableColumn>ACTION</TableColumn>
               </TableHeader>
               <TableBody>
-                {studentData.map((e: any) => {
+                {dataProjectById?.assignProject?.map((e: any) => {
+                  const submittedDate = moment(e?.student?.updatedAt).format(
+                    "MMM Do YYYY"
+                  );
+
                   return (
-                    <TableRow key={e.id}>
-                      <TableCell>{e.name}</TableCell>
-                      <TableCell>{e.createdAt}</TableCell>
+                    <TableRow key={e?.student.id}>
+                      <TableCell>{e?.student?.name}</TableCell>
+                      <TableCell>{submittedDate}</TableCell>
                       <TableCell>
                         {
                           <Chip

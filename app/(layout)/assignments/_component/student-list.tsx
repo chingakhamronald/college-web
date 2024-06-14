@@ -13,8 +13,16 @@ import React from "react";
 
 import Link from "next/link";
 import { data } from "../../dashboard/page";
+import { useQueryProjectByTeacher } from "@/hook/useQueryProjectByTeacher";
 
 const StudentList = () => {
+  const { dataProjectByTeacher, isLoadingProjectByTeacher } =
+    useQueryProjectByTeacher("3a44b9cb-36b1-46a5-9e8b-34d678f29b42");
+
+  if (isLoadingProjectByTeacher) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Table isStriped aria-label="Example static collection table">
       <TableHeader>
@@ -24,7 +32,7 @@ const StudentList = () => {
         <TableColumn>ACTION</TableColumn>
       </TableHeader>
       <TableBody>
-        {data.map((e: any) => {
+        {dataProjectByTeacher.map((e: any) => {
           return (
             <TableRow key={e.id}>
               <TableCell>{e.subject}</TableCell>
@@ -43,7 +51,7 @@ const StudentList = () => {
               <TableCell>
                 <div className="relative flex items-center gap-4">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                    <Link href={"/assignStudentList"}>Review</Link>
+                    <Link href={`/assignStudentList/${e.id}`}>Review</Link>
                   </span>
                 </div>
               </TableCell>

@@ -14,7 +14,7 @@ import React from "react";
 import Link from "next/link";
 import { useQueryProjectByTeacher } from "@/hook/useQueryProjectByTeacher";
 
-const StudentList = () => {
+const ProjectList = () => {
   const { dataProjectByTeacher, isLoadingProjectByTeacher } =
     useQueryProjectByTeacher("3a44b9cb-36b1-46a5-9e8b-34d678f29b42");
 
@@ -62,4 +62,4 @@ const StudentList = () => {
   );
 };
 
-export default StudentList;
+export default ProjectList;

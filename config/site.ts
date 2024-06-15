@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "College Web",
+  name: "Student and Teacher Intereaction",
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
@@ -38,4 +38,16 @@ export const siteConfig = {
     discord: "https://discord.gg/9b6yyZKmH4",
     sponsor: "https://patreon.com/jrgarciadev",
   },
+};
+
+
+export const siteConfigStudent = {
+  name: "Sturdent and Teacher Intereaction",
+  description: "Make beautiful websites regardless of your design experience.",
+  navItems: [
+    {
+      label: "Home",
+      href: "/dashboard",
+    },
+  ],
 };

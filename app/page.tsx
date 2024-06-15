@@ -37,7 +37,7 @@ const Login = () => {
         >
           <Form>
             <h2 className="text-center text-3xl font-bold mb-2">
-              Welcome to College Web
+              Welcome to Student and Teacher Intereaction
             </h2>
             <h2 className="text-center text-3xl  font-bold mb-4">
               Please Sign In!

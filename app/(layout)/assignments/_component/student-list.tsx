@@ -12,7 +12,6 @@ import {
 import React from "react";
 
 import Link from "next/link";
-import { data } from "../../dashboard/page";
 import { useQueryProjectByTeacher } from "@/hook/useQueryProjectByTeacher";
 
 const StudentList = () => {

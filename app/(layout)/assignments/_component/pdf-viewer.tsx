@@ -41,6 +41,8 @@ export const PdfViewer: React.FC<PdfViewerProps> = (props: PdfViewerProps) => {
 
   const pdfUrl = props.url.startsWith("http") ? props.url : `${props.url}`;
 
+  console.log({ "pdfUrl+++++++": pdfUrl });
+
   return (
     <div>
       <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>

@@ -1,8 +1,10 @@
 import { IQuestionProps } from "@/types"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 export const useMutationAssignProject = (teacherId: string) => {
+  const queryClient = useQueryClient()
+
   const { mutate: mutateAssignProject, isPending: isPendingAssignProject } = useMutation({
     mutationKey: ['AssignProject'],
     mutationFn: async (postdata: IQuestionProps) => {
@@ -11,7 +13,15 @@ export const useMutationAssignProject = (teacherId: string) => {
       console.log({ 'res...': res.data });
 
       return res.data
+    },
+    onSuccess: (data) => {
+      console.log({ 'data': data });
+
+      if (data) {
+        queryClient.invalidateQueries({ queryKey: ['ProjectByTeacher'] })
+        queryClient.invalidateQueries({ queryKey: ['ProjectByStudent'] })
+      }
     }
-  })
+  },)
   return { mutateAssignProject, isPendingAssignProject }
 }

@@ -11,7 +11,7 @@ import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { siteConfig } from "@/config/site";
+import { siteConfig, siteConfigStudent } from "@/config/site";
 import { Logo } from "@/components/icons";
 import { signOut, useSession } from "next-auth/react";
 
@@ -31,7 +31,10 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
+          {(session?.user.role === "teacher"
+            ? siteConfig
+            : siteConfigStudent
+          ).navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(

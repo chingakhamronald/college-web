@@ -51,7 +51,7 @@ const ViewAndUpload = ({ params }: { params: { id: string } }) => {
             <div>
               <StudentForm
                 projectId={dataProjectById?.id}
-                studentId={session?.user.id}
+                studentId={session?.user.id ?? ""}
               />
             </div>
           )}

@@ -7,27 +7,28 @@ import { S3 } from 'aws-sdk';
 import { ObjectCannedACL, S3Client } from '@aws-sdk/client-s3';
 
 export async function GET(req: Request, { params }: { params: any }) {
-  const { projectId, studentId } = params;
-  let result = await prisma.doc.findFirst({
-    where: { projectId, studentId }
+  const { projectId, userId } = params;
+  const student = await prisma.student.findFirst({ where: { userId: userId } });
+  if (!student) {
+    return NextResponse.json({ error: 'student not found' });
+  }
+  const result = await prisma.doc.findFirst({
+    where: { projectId, studentId: student.id }
   });
-  // if (!result) {
-  //   return NextResponse.json({ error: 'Not Found' }, { status: 404 });
-  // }
+
   if (!result?.path) {
     return [];
   }
-  console.log('res', result);
   return NextResponse.json(result);
 }
 
 export async function POST(
   req: Request,
-  { params }: { params: { projectId: string; studentId: string } }
+  { params }: { params: { projectId: string; userId: string } }
 ) {
   try {
     // const body = await req.json();
-    const { projectId, studentId } = params;
+    const { projectId, userId } = params;
     // const { docName } = body;
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
@@ -51,13 +52,13 @@ export async function POST(
 
     const student = await prisma.student.findUnique({
       where: {
-        id: studentId
+        userId
       }
     });
 
     if (!project || !student) {
       return NextResponse.json({
-        error: `Project ${project?.name ?? ''} or Student ${
+        error: `Project ${project?.question ?? ''} or Student ${
           student?.name ?? ''
         } not found`
       });
@@ -65,7 +66,7 @@ export async function POST(
     const doc = await prisma.doc.findFirst({
       where: {
         projectId,
-        studentId
+        studentId: student.id
       }
     });
     if (doc) {
@@ -80,7 +81,7 @@ export async function POST(
         docName: docName ?? '',
         path: res.Location,
         projectId,
-        studentId
+        studentId: student.id
       }
     });
     return NextResponse.json(result);
@@ -94,7 +95,7 @@ async function uploadFile(dataBuffer: Buffer, fileName: string, type: string) {
   const s3 = new S3();
   const uploadResultw = await s3
     .upload({
-      Bucket: process.env.BUCKET_NAME ?? '',
+      Bucket: process.env.NODE_ENV,
       Body: dataBuffer,
       Key: `${fileName}-${Date.now()}`,
       ACL: 'public-read' as ObjectCannedACL

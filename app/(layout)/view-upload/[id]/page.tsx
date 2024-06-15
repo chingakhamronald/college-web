@@ -2,11 +2,20 @@
 
 import { Button, Card, CardBody } from "@nextui-org/react";
 import React, { useState } from "react";
-import { StudentForm } from "../assignments/_component/student-form";
-// import { PdfViewer } from "../assignments/_component/pdf-viewer";
+import { StudentForm } from "../../assignments/_component/student-form";
+import { useQueryProjectById } from "@/hook/useQueryProjectById";
+import { PdfViewer } from "../../assignments/_component/pdf-viewer";
 
-const ViewAndUpload = () => {
+const ViewAndUpload = ({ params }: { params: { id: string } }) => {
   const [state, setState] = useState("view");
+
+  const { dataProjectById, isLoadingProjectById } = useQueryProjectById(
+    params.id
+  );
+
+  if (isLoadingProjectById) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="mt-4">
@@ -19,9 +28,9 @@ const ViewAndUpload = () => {
             <Card className="flex-1">
               <CardBody>
                 <h4 className="font-bold text-large">Question Details</h4>
-                <p>Subject: {data.subject}</p>
-                <p>Semester: {data.semester}</p>
-                <p>Question: {data.question}</p>
+                <p>Subject: {dataProjectById.subject}</p>
+                <p>Semester: {dataProjectById.semester}</p>
+                <p>Question: {dataProjectById.name}</p>
               </CardBody>
             </Card>
           </div>
@@ -32,10 +41,12 @@ const ViewAndUpload = () => {
             </Button>
           </div>
           {state === "view" ? (
-            <div>{/* <PdfViewer url={data.url} /> */}</div>
+            <div>
+              <PdfViewer />
+            </div>
           ) : (
             <div>
-              <StudentForm subject={data.subject} />
+              <StudentForm subject={dataProjectById.subject} />
             </div>
           )}
         </div>
@@ -45,18 +56,3 @@ const ViewAndUpload = () => {
 };
 
 export default ViewAndUpload;
-
-const data = {
-  firstName: "John",
-  lastName: "Doe",
-  email: "johndoe@bu.edu",
-  father_name: "John",
-  mobile_number: "0123456789",
-  address: "123 Main St",
-  pincode: "12345",
-  subject: "Dynamics",
-  department: "Mechanical",
-  question: "whatnfsjd ?",
-  semester: "Semester 3",
-  url: "https://wcd.nic.in/sites/default/files/Beti%20Bachao-Beti%20Padao_Hindi.pdf",
-};

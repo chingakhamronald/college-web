@@ -1,13 +1,13 @@
 "use client";
 
-import { Card, CardBody, Image } from "@nextui-org/react";
+import { Card, CardBody } from "@nextui-org/react";
 import { pdfjs, Document, Page } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { useCallback, useState } from "react";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
 type PdfViewerProps = {
-  url: string;
+  url?: string;
 };
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -39,13 +39,16 @@ export const PdfViewer: React.FC<PdfViewerProps> = (props: PdfViewerProps) => {
     setNumPages(nextNumPages);
   }
 
-  const pdfUrl = props.url.startsWith("http") ? props.url : `${props.url}`;
+  // const pdfUrl = props.url.startsWith("http") ? props.url : `${props.url}`;
 
-  console.log({ "pdfUrl+++++++": pdfUrl });
+  console.log({ "pdfUrl+++++++": props.url });
 
   return (
     <div>
-      <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+      <Document
+        file={"../../../../public/pdf/test.pdf"}
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
         {Array.from(new Array(numPages), (el, index) => (
           <Card radius="none" className="my-2 w-min" key={`card_${index + 1}`}>
             <CardBody>

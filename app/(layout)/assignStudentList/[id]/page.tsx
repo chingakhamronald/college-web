@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { useQueryProjectById } from "@/hook/useQueryProjectById";
 import moment from "moment";
+import { useMutationAssignProjectByTeacher } from "@/hook/useMutationAssignProjectByTeacher";
 
 const AssignStudentList = ({ params }: { params: { id: string } }) => {
   console.log({ "Id,....": params.id });
@@ -24,7 +25,10 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
-  console.log({ dataProjectById: dataProjectById });
+  console.log({ dataProjectById: dataProjectById?.id });
+
+  const { isPendingAssignProjectByTeacher, mutateAssignProjectByTeacher } =
+    useMutationAssignProjectByTeacher(dataProjectById?.id);
 
   if (isLoadingProjectById) {
     return <div>Loading...</div>;
@@ -37,7 +41,12 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
           <h1 className="text-3xl font-bold text-center mb-5">
             Assignment Details
           </h1>
-          <Button>Assign</Button>
+          <Button
+            onClick={() => mutateAssignProjectByTeacher()}
+            isLoading={isPendingAssignProjectByTeacher}
+          >
+            Assign
+          </Button>
         </div>
         <div>
           <div className="flex flex-row flex-wrap gap-2">
@@ -99,31 +108,3 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
 };
 
 export default AssignStudentList;
-
-const data = {
-  question: "What is the meaning of life?",
-  subject: "Dynamics",
-  department: "Mechanical",
-  semester: "Semester 3",
-};
-
-const studentData = [
-  {
-    id: 1,
-    name: "John",
-    createdAt: "01-02-2023",
-    status: true,
-  },
-  {
-    id: 2,
-    name: "Jane",
-    createdAt: "01-02-2023",
-    status: true,
-  },
-  {
-    id: 3,
-    name: "Bob",
-    createdAt: "",
-    status: false,
-  },
-];

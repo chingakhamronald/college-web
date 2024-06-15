@@ -9,8 +9,16 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import Link from "next/link";
+import { useQueryProjectByStudent } from "@/hook/useQueryProjectByStudent";
 
 const AssignmentList = () => {
+  const { dataProjectByStudent, isLoadingProjectByStudent } =
+    useQueryProjectByStudent("6625e8a2-6248-486f-96a1-79f1cc74202d");
+
+  if (isLoadingProjectByStudent) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Table isStriped aria-label="Example static collection table">
       <TableHeader>
@@ -19,7 +27,7 @@ const AssignmentList = () => {
         <TableColumn>ACTION</TableColumn>
       </TableHeader>
       <TableBody>
-        {data.map((e: any) => {
+        {dataProjectByStudent.map((e: any) => {
           return (
             <TableRow key={e.id}>
               <TableCell>{e.teacher}</TableCell>
@@ -27,7 +35,7 @@ const AssignmentList = () => {
               <TableCell>
                 <div className="relative flex items-center gap-4">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                    <Link href={"/review"}>View & Upload</Link>
+                    <Link href={`/view-upload/${e.id}`}>View & Upload</Link>
                   </span>
                 </div>
               </TableCell>

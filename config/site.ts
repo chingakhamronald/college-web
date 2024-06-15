@@ -1,7 +1,7 @@
-export type SiteConfig = typeof siteConfig;
+export type SiteConfig = typeof siteConfig & typeof siteConfigStudent;
 
 export const siteConfig = {
-  name: "College Web",
+  name: "Student and Teacher Intereaction",
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
@@ -13,29 +13,16 @@ export const siteConfig = {
       href: "/assignments",
     },
   ],
-  navMenuItems: [
+};
+
+
+export const siteConfigStudent = {
+  name: "Sturdent and Teacher Intereaction",
+  description: "Make beautiful websites regardless of your design experience.",
+  navItems: [
     {
       label: "Home",
       href: "/dashboard",
     },
-    {
-      label: "Student List",
-      href: "/students",
-    },
-    {
-      label: "Assignments",
-      href: "/assignments",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
-    },
   ],
-  links: {
-    github: "https://github.com/nextui-org/nextui",
-    twitter: "https://twitter.com/getnextui",
-    docs: "https://nextui.org",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
 };

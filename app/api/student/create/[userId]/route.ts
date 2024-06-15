@@ -9,7 +9,7 @@ export async function POST(
   try {
     const body = await req.json();
     const userId = params.userId;
-    const { name, address, mobile_number, department } = body;
+    const { name, address, mobile_number, department, fatherName, semester } = body;
     const user = await getUser(userId);
     const teacher = await getTeacher(userId);
     if (teacher) {
@@ -31,6 +31,8 @@ export async function POST(
         department: department,
         mobile_number: mobile_number,
         name: name,
+        fatherName: fatherName,
+        semester: semester,
         userId: user.id
       }
     });

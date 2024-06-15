@@ -5,6 +5,23 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 };
 
 export type IQuestionProps = {
-  question: string;
+  name: string;
   semester: string;
+  subject: string
+}
+
+export type ITeacherProps = {
+  name: string;
+  department: string;
+  mobile_number: string;
+  address: string
+}
+
+export type IStudentProps = {
+  name: string;
+  department: string;
+  mobile_number: string;
+  address: string;
+  fatherName: string;
+  semester: string
 }

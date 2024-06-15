@@ -1,11 +1,25 @@
 "use client";
 
 import { FileUpload } from "@/app/(layout)/assignments/_component/file-upload";
+import { useMutationUploadFile } from "@/hook/useMutationUploadFile";
 import { Button, Card } from "@nextui-org/react";
 import { Form, Formik } from "formik";
-import React from "react";
+import moment from "moment";
+import React, { FC } from "react";
 
-export const StudentForm = ({ subject }: { subject: string }) => {
+interface IStudentForm {
+  studentId: string;
+  projectId: string;
+}
+
+export const StudentForm: FC<IStudentForm> = ({ projectId, studentId }) => {
+  const { mutateUploadFile, isLoadingUploadFile } = useMutationUploadFile(
+    studentId,
+    projectId
+  );
+
+  const currentTime = moment().format("DD-MM-YYYY");
+
   return (
     <div className="mt-4">
       <Card className="p-6" shadow="sm">
@@ -16,23 +30,30 @@ export const StudentForm = ({ subject }: { subject: string }) => {
           enableReinitialize={true}
           // validationSchema={validationSchema}
           initialValues={{
-            subject: subject,
-            path: null,
-            projectName: "New",
+            file: "",
+            docName: currentTime,
           }}
           onSubmit={(e) => {
             console.log({ "e...": e });
+            const formData = new FormData();
 
-            // mutation.mutate(e);
+            console.log({ formData: formData });
+
+            formData.append("file", e.file);
+            formData.append("docName", e.file);
+
+            mutateUploadFile(formData);
           }}
         >
           {({ setFieldValue, values }) => (
             <Form>
               <div className="w-full flex-wrap md:flex-nowrap">
-                <FileUpload setFieldValue={setFieldValue} name="path" />
+                <FileUpload setFieldValue={setFieldValue} name="file" />
               </div>
               <div className="text-center mt-5">
-                <Button type="submit">Submit</Button>
+                <Button type="submit" isLoading={isLoadingUploadFile}>
+                  Submit
+                </Button>
               </div>
             </Form>
           )}

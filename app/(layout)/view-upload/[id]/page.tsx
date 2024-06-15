@@ -5,8 +5,13 @@ import React, { useState } from "react";
 import { StudentForm } from "../../assignments/_component/student-form";
 import { useQueryProjectById } from "@/hook/useQueryProjectById";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const ViewAndUpload = ({ params }: { params: { id: string } }) => {
+  const { data: session } = useSession();
+
+  console.log({ "session...": session?.user });
+
   const [state, setState] = useState<boolean>(false);
 
   const router = useRouter();
@@ -44,7 +49,10 @@ const ViewAndUpload = ({ params }: { params: { id: string } }) => {
           </div>
           {state && (
             <div>
-              <StudentForm subject={dataProjectById.subject} />
+              <StudentForm
+                projectId={dataProjectById?.id}
+                studentId={session?.user.id}
+              />
             </div>
           )}
         </div>

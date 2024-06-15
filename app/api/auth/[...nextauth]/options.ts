@@ -40,7 +40,7 @@ export const options: NextAuthOptions = {
             throw new Error("user or role not found.")
           }
 
-          return { ...user, password: null, role: user.role };
+          return { ...user, password: null, role: user.role, id: user.id };
         }
         catch (error) {
           console.log({ "error.....": error })
@@ -57,16 +57,18 @@ export const options: NextAuthOptions = {
 
       if (user) {
         token.role = user.role;
+        token.id = user.id
       }
 
       return token;
     },
 
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       if (session?.user) {
         session.user.role = token.role;
+        session.user.id = token.id
       }
-      console.log('session user ', session.user)
+      console.log('session user ', session.user, user)
       return session;
     },
   },

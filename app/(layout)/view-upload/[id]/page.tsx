@@ -4,10 +4,12 @@ import { Button, Card, CardBody } from "@nextui-org/react";
 import React, { useState } from "react";
 import { StudentForm } from "../../assignments/_component/student-form";
 import { useQueryProjectById } from "@/hook/useQueryProjectById";
-import { PdfViewer } from "../../assignments/_component/pdf-viewer";
+import { useRouter } from "next/navigation";
 
 const ViewAndUpload = ({ params }: { params: { id: string } }) => {
-  const [state, setState] = useState("view");
+  const [state, setState] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const { dataProjectById, isLoadingProjectById } = useQueryProjectById(
     params.id
@@ -35,16 +37,12 @@ const ViewAndUpload = ({ params }: { params: { id: string } }) => {
             </Card>
           </div>
           <div className="flex flex-row flex-wrap justify-between mt-4">
-            <Button onClick={() => setState("view")}>View Assignment</Button>
-            <Button onClick={() => setState("upload")}>
-              Upload Assignment
+            <Button onClick={() => router.push("/view-pdf")}>
+              View Assignment
             </Button>
+            <Button onClick={() => setState(true)}>Upload Assignment</Button>
           </div>
-          {state === "view" ? (
-            <div>
-              <PdfViewer />
-            </div>
-          ) : (
+          {state && (
             <div>
               <StudentForm subject={dataProjectById.subject} />
             </div>

@@ -3,61 +3,42 @@
 import { Card, CardBody } from "@nextui-org/react";
 import { pdfjs, Document, Page } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
 type PdfViewerProps = {
   url?: string;
 };
 
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   "pdfjs-dist/build/pdf.worker.min.mjs",
-//   import.meta.url
-// ).toString();
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const maxWidth = 600;
-
-export const PdfViewer: React.FC<PdfViewerProps> = (props: PdfViewerProps) => {
-  console.log("PdfViewer props.... ", props);
-
+export const PdfViewer: React.FC<PdfViewerProps> = ({ url }) => {
   const [numPages, setNumPages] = useState<number>();
-  //const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState<number>(600);
 
-  const onResize = useCallback<ResizeObserverCallback>((entries) => {
-    const [entry] = entries;
-
-    if (entry) {
-      setContainerWidth(entry.contentRect.width);
-    }
-  }, []);
-
-  function onDocumentLoadSuccess({
+  const onDocumentLoadSuccess = ({
     numPages: nextNumPages,
-  }: PDFDocumentProxy): void {
+  }: PDFDocumentProxy) => {
     setNumPages(nextNumPages);
-  }
-
-  // const pdfUrl = props.url.startsWith("http") ? props.url : `${props.url}`;
-
-  console.log({ "pdfUrl+++++++": props.url });
+  };
 
   return (
     <div>
       <Document
         file={
-          "https://mitnewbucket.s3.ap-south-1.amazonaws.com/5909710410139114764%20%282%29.pdf-1718443250939"
+          "https://mitnewbucket.s3.ap-south-1.amazonaws.com/5909710410139114764+(2).pdf-1718445202624"
         }
         onLoadSuccess={onDocumentLoadSuccess}
       >
         {Array.from(new Array(numPages), (el, index) => (
-          <Card radius="none" className="my-2 w-min" key={`card_${index + 1}`}>
+          <Card
+            radius="none"
+            className="my-2 shadow-md"
+            key={`card_${index + 1}`}
+          >
             <CardBody>
               <Page
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
-                //width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
                 renderAnnotationLayer={false}
               />
             </CardBody>

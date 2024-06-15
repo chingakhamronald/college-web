@@ -35,7 +35,7 @@ const AssignmentList = () => {
               <TableCell>
                 <div className="relative flex items-center gap-4">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                    <Link href={"/view-upload"}>View & Upload</Link>
+                    <Link href={`/view-upload/${e.id}`}>View & Upload</Link>
                   </span>
                 </div>
               </TableCell>

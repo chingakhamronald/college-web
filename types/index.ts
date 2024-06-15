@@ -9,3 +9,19 @@ export type IQuestionProps = {
   semester: string;
   subject: string
 }
+
+export type ITeacherProps = {
+  name: string;
+  department: string;
+  mobile_number: string;
+  address: string
+}
+
+export type IStudentProps = {
+  name: string;
+  department: string;
+  mobile_number: string;
+  address: string;
+  fatherName: string;
+  semester: string
+}

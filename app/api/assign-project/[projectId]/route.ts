@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '../../../../../config/prisma/db';
+import { prisma } from '../../../../config/prisma/db';
 
 export async function GET(req: Request, { params }: { params: any }) {
   const { projectId, studentId } = params;
@@ -15,12 +15,12 @@ export async function GET(req: Request, { params }: { params: any }) {
 }
 export async function POST(
   req: Request,
-  { params }: { params: { projectId: string; studentId: string } }
+  { params }: { params: { projectId: string } }
 ) {
   try {
-    const body = await req.json();
-    const { projectId, studentId } = params;
-    const { assignedBy } = body;
+    //   const body = await req.json();
+    const { projectId } = params;
+    // const { assignedBy } = body;
     // const user = await getUser(userId);
     // // const teacher = await getTeacher(userId);
     // if (teacher) {
@@ -43,21 +43,38 @@ export async function POST(
     const project = await prisma.project.findUnique({
       where: { id: projectId }
     });
-    const student = await prisma.student.findUnique({
-      where: { id: studentId }
-    });
-    if (!project || !student) {
+    // const student = await prisma.student.findUnique({
+    //   where: { id: studentId }
+    // });
+    if (!project) {
       return NextResponse.json({ error: 'project or student not found' });
     }
-
-    const createTeacher = await prisma.assignProject.create({
-      data: {
-        assignedBy: teacher?.name ?? '',
-        projectId,
-        studentId
+    const students = await prisma.student.findMany({
+      where: {
+        department: teacher?.department,
+        semester: project?.semester
       }
     });
-    return NextResponse.json(createTeacher);
+    console.log({ STUDENTSSSSSSS: students });
+
+    // const createTeacher = await prisma.assignProject.create({
+    //   data: {
+    //     assignedBy: teacher?.name ?? '',
+    //     projectId,
+    //     studentId
+    //   }
+    // });
+    for (const studentId of students) {
+      console.log({ STUDENTSSSSSSSSSSSSSSS_______: studentId.id });
+      const createTeacher = await prisma.assignProject.create({
+        data: {
+          assignedBy: teacher?.name ?? '',
+          projectId,
+          studentId: studentId.id
+        }
+      });
+    }
+    return NextResponse.json('assigned');
   } catch (e) {
     console.log('error', e);
     return NextResponse.json({ error: 'Something went wrong' });

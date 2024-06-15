@@ -46,7 +46,9 @@ export const PdfViewer: React.FC<PdfViewerProps> = (props: PdfViewerProps) => {
   return (
     <div>
       <Document
-        file={"../../../../public/pdf/test.pdf"}
+        file={
+          "https://mitnewbucket.s3.ap-south-1.amazonaws.com/5909710410139114764%20%282%29.pdf-1718443250939"
+        }
         onLoadSuccess={onDocumentLoadSuccess}
       >
         {Array.from(new Array(numPages), (el, index) => (

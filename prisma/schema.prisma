@@ -69,7 +69,7 @@ model Doc {
 
 model Project {
   id            String          @id @default(uuid())
-  name          String?
+  question      String?
   semester      String?
   subject       String?
   assignProject AssignProject[]

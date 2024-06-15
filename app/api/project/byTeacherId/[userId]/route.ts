@@ -3,9 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../config/prisma/db';
 
 export async function GET(req: Request, { params }: { params: any }) {
-  const { teacherId } = params;
+  const { userId } = params;
+  const teacher = await getTeacher(userId);
+  if (!teacher) {
+    return NextResponse.json({ error: 'Teacher not Found' });
+  }
   let result = await prisma.project.findMany({
-    where: { teacherId: teacherId }
+    where: { teacherId: teacher.id }
   });
   if (!result) {
     return NextResponse.json({ error: 'Not Found' }, { status: 404 });
@@ -15,28 +19,25 @@ export async function GET(req: Request, { params }: { params: any }) {
 }
 export async function POST(
   req: Request,
-  { params }: { params: { teacherId: string } }
+  { params }: { params: { userId: string } }
 ) {
   try {
     const body = await req.json();
-    const teacherId = params.teacherId;
-    const { name, semester, subject } = body;
-    console.log({ Parammm____: params, BODY____: body });
-    // const user = await getUser(userId);
-    const teacher = await getTeacher(teacherId);
-    // if (teacher) {
-    //   return NextResponse.json({ error: 'Already Exist' });
-    // }
+    const userId = params.userId;
+
+    const { question, semester, subject } = body;
+    const teacher = await getTeacher(userId);
+
     if (!teacher) {
       return NextResponse.json({ error: 'Teacher not Found' });
     }
 
     const createTeacher = await prisma.project.create({
       data: {
-        name: name ?? '',
+        question: question ?? '',
         semester: semester ?? '',
         subject: subject ?? '',
-        teacherId: teacherId
+        teacherId: teacher.id
       }
     });
     return NextResponse.json(createTeacher);
@@ -48,6 +49,6 @@ export async function POST(
 function getTeacher(id: string) {
   console.log({ ID____: id });
   return prisma.teacher.findUnique({
-    where: { id }
+    where: { userId: id }
   });
 }

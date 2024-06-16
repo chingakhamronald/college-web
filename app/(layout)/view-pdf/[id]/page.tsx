@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { PdfViewer } from "../../assignments/_component/pdf-viewer";
 import { useQueryUploadFileByStudent } from "@/hook/useQueryUploadFileByStudent";
 import { useSession } from "next-auth/react";
@@ -20,19 +20,16 @@ const ViewPdf = ({ params }: { params: any }) => {
   const { isLoadingViewFileByStudent, viewFileByStudent } =
     useQueryUploadFileByStudent(params.id, session?.user.id ?? "");
 
-  const { viewFileByTeacher, isLoadingViewFileByTeacher } =
+  const { viewFileByTeacher, isLoadingViewFileByTeacher, isError } =
     useQueryUploadFileByTeacher(projectId, params.id);
 
   if (isLoadingViewFileByStudent || isLoadingViewFileByTeacher) {
     return <div>Loading...</div>;
   }
 
-  console.log({
-    "viewFileByStudent...": viewFileByStudent,
-    "viewFileByTeacher..": viewFileByTeacher,
-    "studentId..": session?.user.id,
-    "projectId...": params.id,
-  });
+  if (isError) {
+    return <div className="flex justify-center">No File Found</div>;
+  }
 
   return (
     <div>

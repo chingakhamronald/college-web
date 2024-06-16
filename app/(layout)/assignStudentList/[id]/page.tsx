@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   Chip,
   Table,
@@ -11,16 +11,16 @@ import {
   TableRow,
   Card,
   CardBody,
-  Button
-} from '@nextui-org/react';
-import { useQueryProjectById } from '@/hook/useQueryProjectById';
-import moment from 'moment';
-import { useMutationAssignProjectByTeacher } from '@/hook/useMutationAssignProjectByTeacher';
-import { useRouter } from 'next/navigation';
-import { useGlobalStore } from '@/store/useStore';
+  Button,
+} from "@nextui-org/react";
+import { useQueryProjectById } from "@/hook/useQueryProjectById";
+import moment from "moment";
+import { useMutationAssignProjectByTeacher } from "@/hook/useMutationAssignProjectByTeacher";
+import { useRouter } from "next/navigation";
+import { useGlobalStore } from "@/store/useStore";
 
 const AssignStudentList = ({ params }: { params: { id: string } }) => {
-  console.log({ 'Id,....': params.id });
+  console.log({ "Id,....": params.id });
 
   const { dataProjectById, isLoadingProjectById } = useQueryProjectById(
     params.id
@@ -28,13 +28,13 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
 
   const { setProjectId, projectId } = useGlobalStore();
 
-  console.log({
-    dataProjectById: dataProjectById?.id,
-    'projectId....': projectId
-  });
-
   const { isPendingAssignProjectByTeacher, mutateAssignProjectByTeacher } =
     useMutationAssignProjectByTeacher(dataProjectById?.id);
+
+  console.log({
+    dataProjectById: dataProjectById?.id,
+    "projectId....": projectId,
+  });
 
   const router = useRouter();
 
@@ -63,7 +63,7 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
                 <h4 className="font-bold text-large">Question Details</h4>
                 <p>Subject: {dataProjectById.subject}</p>
                 <p>Semester: {dataProjectById.semester}</p>
-                <p>Question: {dataProjectById.name}</p>
+                <p>Question: {dataProjectById.question}</p>
               </CardBody>
             </Card>
           </div>
@@ -78,7 +78,7 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
               <TableBody>
                 {dataProjectById?.assignProject?.map((e: any) => {
                   const submittedDate = moment(e?.student?.updatedAt).format(
-                    'MMM Do YYYY'
+                    "MMM Do YYYY"
                   );
 
                   return (
@@ -88,11 +88,11 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
                       <TableCell>
                         {
                           <Chip
-                            color={e.status ? 'success' : 'danger'}
+                            color={e.status ? "success" : "danger"}
                             variant="flat"
                             key={e.id}
                           >
-                            {e.status ? 'Completed' : 'Pending'}
+                            {e.status ? "Completed" : "Pending"}
                           </Chip>
                         }
                       </TableCell>

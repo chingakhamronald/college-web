@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const useQueryUploadFileByTeacher = (projectId: string, studentId: string) => {
-  const { data: viewFileByTeacher, isLoading: isLoadingViewFileByTeacher } = useQuery({
+  const { data: viewFileByTeacher, isLoading: isLoadingViewFileByTeacher, refetch, error, isError } = useQuery({
 
 
     queryKey: ['UploadFileByTeacher'],
@@ -14,5 +14,5 @@ export const useQueryUploadFileByTeacher = (projectId: string, studentId: string
     }
   })
 
-  return { viewFileByTeacher, isLoadingViewFileByTeacher };
+  return { viewFileByTeacher, isLoadingViewFileByTeacher, refetch, error, isError };
 }

@@ -21,6 +21,10 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({ url }) => {
     setNumPages(nextNumPages);
   };
 
+  if (!url) {
+    return null;
+  }
+
   return (
     <div>
       <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>

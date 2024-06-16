@@ -30,7 +30,6 @@ const ProjectList = () => {
       <TableHeader>
         <TableColumn>SUBJECT</TableColumn>
         <TableColumn>SEMESTER</TableColumn>
-        <TableColumn>STATUS</TableColumn>
         <TableColumn>ACTION</TableColumn>
       </TableHeader>
       <TableBody>
@@ -39,17 +38,6 @@ const ProjectList = () => {
             <TableRow key={e.id}>
               <TableCell>{e.subject}</TableCell>
               <TableCell>{e.semester}</TableCell>
-              <TableCell>
-                {
-                  <Chip
-                    color={e.status ? "success" : "danger"}
-                    variant="flat"
-                    key={e.id}
-                  >
-                    {e.status ? "Completed" : "Pending"}
-                  </Chip>
-                }
-              </TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-4">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">

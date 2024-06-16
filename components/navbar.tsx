@@ -24,7 +24,9 @@ export const Navbar = () => {
             href="/dashboard"
           >
             <Logo />
-            <p className="font-bold text-inherit">College Web</p>
+            <p className="font-bold text-inherit">
+              Student and Teacher Intereaction
+            </p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">

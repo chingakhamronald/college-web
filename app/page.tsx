@@ -4,12 +4,9 @@ import { InputField } from "@/components/custom-field";
 import { loginValidationSchema } from "@/config/constant";
 import { Button } from "@nextui-org/button";
 import { Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 const Login = () => {
-  const router = useRouter();
-
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <div className="flex flex-1 justify-center items-center">

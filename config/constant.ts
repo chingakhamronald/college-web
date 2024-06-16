@@ -3,14 +3,14 @@ import * as Yup from "yup";
 
 
 export const initialValues: IQuestionProps = {
-  name: "",
+  question: "",
   semester: "",
   subject: ""
 }
 
 
 export const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Question is required"),
+  question: Yup.string().required("Question is required"),
   semester: Yup.string().required("Semester is required"),
   subject: Yup.string().required("Subject is required")
 })
@@ -23,6 +23,6 @@ export const loginValidationSchema = Yup.object({
 export const departmentList: { key: string, label: string }[] = [
   { key: "CSE", label: "Computer Science Engineering Department" },
   { key: "CE", label: "Civil Engineering Department" },
-  { key: "ME", label: "Civil Engineering Department" },
+  { key: "ME", label: "Mechanical Engineering Department" },
 
 ];

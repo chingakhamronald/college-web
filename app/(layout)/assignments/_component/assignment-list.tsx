@@ -10,10 +10,12 @@ import {
 import React from "react";
 import Link from "next/link";
 import { useQueryProjectByStudent } from "@/hook/useQueryProjectByStudent";
+import { useSession } from "next-auth/react";
 
 const AssignmentList = () => {
+  const { data: session } = useSession();
   const { dataProjectByStudent, isLoadingProjectByStudent } =
-    useQueryProjectByStudent("6625e8a2-6248-486f-96a1-79f1cc74202d");
+    useQueryProjectByStudent(session?.user?.id ?? "");
 
   if (isLoadingProjectByStudent) {
     return <div>Loading...</div>;
@@ -27,10 +29,10 @@ const AssignmentList = () => {
         <TableColumn>ACTION</TableColumn>
       </TableHeader>
       <TableBody>
-        {dataProjectByStudent.map((e: any) => {
+        {dataProjectByStudent?.map((e: any) => {
           return (
             <TableRow key={e.id}>
-              <TableCell>{e.teacher}</TableCell>
+              <TableCell>{e.teacher.name}</TableCell>
               <TableCell>{e.subject}</TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-4">

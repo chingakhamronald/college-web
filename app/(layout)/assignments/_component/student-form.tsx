@@ -35,12 +35,10 @@ export const StudentForm: FC<IStudentForm> = ({ projectId, studentId }) => {
           }}
           onSubmit={(e) => {
             console.log({ "e...": e });
-            const formData = new FormData();
-
-            console.log({ formData: formData });
+            let formData = new FormData();
 
             formData.append("file", e.file);
-            formData.append("docName", e.file);
+            formData.append("docName", currentTime);
 
             mutateUploadFile(formData);
           }}

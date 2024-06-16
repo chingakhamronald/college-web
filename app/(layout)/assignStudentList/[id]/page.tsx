@@ -91,7 +91,9 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
                       <TableCell>
                         <div className="relative flex items-center gap-4">
                           <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                            <Link href={"/assignStudentList"}>View</Link>
+                            <Link href={`/view-pdf/${e?.student?.id}`}>
+                              View
+                            </Link>
                           </span>
                         </div>
                       </TableCell>

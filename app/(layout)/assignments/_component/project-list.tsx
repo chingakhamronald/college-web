@@ -13,10 +13,13 @@ import React from "react";
 
 import Link from "next/link";
 import { useQueryProjectByTeacher } from "@/hook/useQueryProjectByTeacher";
+import { useSession } from "next-auth/react";
 
 const ProjectList = () => {
+  const { data: session } = useSession();
+
   const { dataProjectByTeacher, isLoadingProjectByTeacher } =
-    useQueryProjectByTeacher("3a44b9cb-36b1-46a5-9e8b-34d678f29b42");
+    useQueryProjectByTeacher(session?.user?.id ?? "");
 
   if (isLoadingProjectByTeacher) {
     return <div>Loading...</div>;
@@ -31,7 +34,7 @@ const ProjectList = () => {
         <TableColumn>ACTION</TableColumn>
       </TableHeader>
       <TableBody>
-        {dataProjectByTeacher.map((e: any) => {
+        {dataProjectByTeacher?.map((e: any) => {
           return (
             <TableRow key={e.id}>
               <TableCell>{e.subject}</TableCell>

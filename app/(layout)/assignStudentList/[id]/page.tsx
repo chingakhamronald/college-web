@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
   Chip,
   Table,
@@ -11,16 +11,16 @@ import {
   TableRow,
   Card,
   CardBody,
-  Button,
-} from "@nextui-org/react";
-import { useQueryProjectById } from "@/hook/useQueryProjectById";
-import moment from "moment";
-import { useMutationAssignProjectByTeacher } from "@/hook/useMutationAssignProjectByTeacher";
-import { useRouter } from "next/navigation";
-import { useGlobalStore } from "@/store/useStore";
+  Button
+} from '@nextui-org/react';
+import { useQueryProjectById } from '@/hook/useQueryProjectById';
+import moment from 'moment';
+import { useMutationAssignProjectByTeacher } from '@/hook/useMutationAssignProjectByTeacher';
+import { useRouter } from 'next/navigation';
+import { useGlobalStore } from '@/store/useStore';
 
 const AssignStudentList = ({ params }: { params: { id: string } }) => {
-  console.log({ "Id,....": params.id });
+  console.log({ 'Id,....': params.id });
 
   const { dataProjectById, isLoadingProjectById } = useQueryProjectById(
     params.id
@@ -30,7 +30,7 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
 
   console.log({
     dataProjectById: dataProjectById?.id,
-    "projectId....": projectId,
+    'projectId....': projectId
   });
 
   const { isPendingAssignProjectByTeacher, mutateAssignProjectByTeacher } =
@@ -78,7 +78,7 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
               <TableBody>
                 {dataProjectById?.assignProject?.map((e: any) => {
                   const submittedDate = moment(e?.student?.updatedAt).format(
-                    "MMM Do YYYY"
+                    'MMM Do YYYY'
                   );
 
                   return (
@@ -88,11 +88,11 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
                       <TableCell>
                         {
                           <Chip
-                            color={e.status ? "success" : "danger"}
+                            color={e.status ? 'success' : 'danger'}
                             variant="flat"
                             key={e.id}
                           >
-                            {e.status ? "Completed" : "Pending"}
+                            {e.status ? 'Completed' : 'Pending'}
                           </Chip>
                         }
                       </TableCell>

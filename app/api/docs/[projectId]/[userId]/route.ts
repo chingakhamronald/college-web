@@ -58,8 +58,9 @@ export async function POST(
 
     if (!project || !student) {
       return NextResponse.json({
-        error: `Project ${project?.question ?? ''} or Student ${student?.name ?? ''
-          } not found`
+        error: `Project ${project?.question ?? ''} or Student ${
+          student?.name ?? ''
+        } not found`
       });
     }
     const doc = await prisma.doc.findFirst({
@@ -83,8 +84,19 @@ export async function POST(
         studentId: student.id
       }
     });
-
-    console.log('result*******', result);
+    if (result.path) {
+      await prisma.assignProject.update({
+        where: {
+          projectId_studentId: {
+            projectId,
+            studentId: student.id
+          }
+        },
+        data: {
+          status: true
+        }
+      });
+    }
 
     return NextResponse.json(result);
   } catch (e) {

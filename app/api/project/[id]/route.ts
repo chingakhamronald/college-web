@@ -7,7 +7,7 @@ export async function GET(req: Request, { params }: { params: any }) {
   let result = await prisma.project.findUnique({
     where: { id: id },
     include: {
-      assignProject: { select: { student: true } }
+      assignProject: { include: { student: true } }
     }
   });
   if (!result) {

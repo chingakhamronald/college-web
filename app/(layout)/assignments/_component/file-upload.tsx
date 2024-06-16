@@ -14,7 +14,7 @@ export const FileUpload: FC<FileUploadProps> = ({ setFieldValue, name }) => {
       "application/pdf": [".pdf"],
     },
     onDrop: (acceptedFiles) => {
-      setFieldValue(name, acceptedFiles);
+      setFieldValue(name, acceptedFiles[0]);
     },
   });
 

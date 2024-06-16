@@ -24,7 +24,7 @@ export async function PUT(
   try {
     const body = await req.json();
     const id = params.id;
-    const { name, semester, subject } = body;
+    const { question, semester, subject } = body;
     let check = await prisma.project.findUnique({
       where: { id: id }
     });
@@ -35,7 +35,7 @@ export async function PUT(
     const updateProject = await prisma.project.update({
       where: { id: id },
       data: {
-        name: name ? name : check.name,
+        question: question ? question : check.question,
         semester: semester ? semester : check.semester,
         subject: subject ? subject : check.subject
       }

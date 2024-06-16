@@ -13,10 +13,11 @@ import {
   CardBody,
   Button,
 } from "@nextui-org/react";
-import Link from "next/link";
 import { useQueryProjectById } from "@/hook/useQueryProjectById";
 import moment from "moment";
 import { useMutationAssignProjectByTeacher } from "@/hook/useMutationAssignProjectByTeacher";
+import { useRouter } from "next/navigation";
+import { useGlobalStore } from "@/store/useStore";
 
 const AssignStudentList = ({ params }: { params: { id: string } }) => {
   console.log({ "Id,....": params.id });
@@ -25,10 +26,17 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
-  console.log({ dataProjectById: dataProjectById?.id });
+  const { setProjectId, projectId } = useGlobalStore();
+
+  console.log({
+    dataProjectById: dataProjectById?.id,
+    "projectId....": projectId,
+  });
 
   const { isPendingAssignProjectByTeacher, mutateAssignProjectByTeacher } =
     useMutationAssignProjectByTeacher(dataProjectById?.id);
+
+  const router = useRouter();
 
   if (isLoadingProjectById) {
     return <div>Loading...</div>;
@@ -91,7 +99,14 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
                       <TableCell>
                         <div className="relative flex items-center gap-4">
                           <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                            <Link href={"/assignStudentList"}>View</Link>
+                            <Button
+                              onClick={() => {
+                                router.push(`/view-pdf/${e?.student?.id}`);
+                                setProjectId(dataProjectById?.id);
+                              }}
+                            >
+                              View
+                            </Button>
                           </span>
                         </div>
                       </TableCell>

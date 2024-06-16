@@ -58,9 +58,8 @@ export async function POST(
 
     if (!project || !student) {
       return NextResponse.json({
-        error: `Project ${project?.question ?? ''} or Student ${
-          student?.name ?? ''
-        } not found`
+        error: `Project ${project?.question ?? ''} or Student ${student?.name ?? ''
+          } not found`
       });
     }
     const doc = await prisma.doc.findFirst({
@@ -84,6 +83,9 @@ export async function POST(
         studentId: student.id
       }
     });
+
+    console.log('result*******', result);
+
     return NextResponse.json(result);
   } catch (e) {
     console.log('error', e);
@@ -95,7 +97,7 @@ async function uploadFile(dataBuffer: Buffer, fileName: string, type: string) {
   const s3 = new S3();
   const uploadResultw = await s3
     .upload({
-      Bucket: process.env.NODE_ENV,
+      Bucket: 'mitnewbucket',
       Body: dataBuffer,
       Key: `${fileName}-${Date.now()}`,
       ACL: 'public-read' as ObjectCannedACL

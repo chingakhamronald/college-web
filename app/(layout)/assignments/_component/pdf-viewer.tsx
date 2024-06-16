@@ -23,19 +23,14 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({ url }) => {
 
   return (
     <div>
-      <Document
-        file={
-          "https://mitnewbucket.s3.ap-south-1.amazonaws.com/5909710410139114764+(2).pdf-1718445202624"
-        }
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
+      <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
           <Card
             radius="none"
             className="my-2 shadow-md"
             key={`card_${index + 1}`}
           >
-            <CardBody>
+            <CardBody className="flex justify-center items-center">
               <Page
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}

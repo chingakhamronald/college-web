@@ -10,8 +10,6 @@ import { useSession } from "next-auth/react";
 const ViewAndUpload = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
 
-  console.log({ "session...": session?.user });
-
   const [state, setState] = useState<boolean>(false);
 
   const router = useRouter();
@@ -35,14 +33,16 @@ const ViewAndUpload = ({ params }: { params: { id: string } }) => {
             <Card className="flex-1">
               <CardBody>
                 <h4 className="font-bold text-large">Question Details</h4>
-                <p>Subject: {dataProjectById.subject}</p>
-                <p>Semester: {dataProjectById.semester}</p>
-                <p>Question: {dataProjectById.name}</p>
+                <p>Subject: {dataProjectById?.subject}</p>
+                <p>Semester: {dataProjectById?.semester}</p>
+                <p>Question: {dataProjectById?.question}</p>
               </CardBody>
             </Card>
           </div>
           <div className="flex flex-row flex-wrap justify-between mt-4">
-            <Button onClick={() => router.push("/view-pdf")}>
+            <Button
+              onClick={() => router.push(`/view-pdf/${dataProjectById.id}`)}
+            >
               View Assignment
             </Button>
             <Button onClick={() => setState(true)}>Upload Assignment</Button>

@@ -18,6 +18,10 @@ const ViewAndUpload = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
+  console.log({
+    dataProjectById: dataProjectById,
+  });
+
   if (isLoadingProjectById) {
     return <div>Loading...</div>;
   }

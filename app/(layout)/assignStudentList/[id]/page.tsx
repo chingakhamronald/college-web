@@ -20,27 +20,24 @@ import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/useStore";
 
 const AssignStudentList = ({ params }: { params: { id: string } }) => {
-  console.log({ "Id,....": params.id });
+  const { setProjectId } = useGlobalStore();
+
+  const router = useRouter();
 
   const { dataProjectById, isLoadingProjectById } = useQueryProjectById(
     params.id
   );
 
-  const { setProjectId, projectId } = useGlobalStore();
-
-  const { isPendingAssignProjectByTeacher, mutateAssignProjectByTeacher } =
+  const { mutateAssignProjectByTeacher, isPendingAssignProjectByTeacher } =
     useMutationAssignProjectByTeacher(dataProjectById?.id);
-
-  console.log({
-    dataProjectById: dataProjectById?.id,
-    "projectId....": projectId,
-  });
-
-  const router = useRouter();
 
   if (isLoadingProjectById) {
     return <div>Loading...</div>;
   }
+
+  console.log({
+    "dataProjectById......": dataProjectById,
+  });
 
   return (
     <div className="mt-4">
@@ -71,14 +68,14 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
             <Table isStriped aria-label="Example static collection table">
               <TableHeader>
                 <TableColumn>NAME</TableColumn>
-                <TableColumn>SUBMITTED DATE</TableColumn>
+                <TableColumn>ASSIGN DATE</TableColumn>
                 <TableColumn>STATUS</TableColumn>
                 <TableColumn>ACTION</TableColumn>
               </TableHeader>
               <TableBody>
                 {dataProjectById?.assignProject?.map((e: any) => {
-                  const submittedDate = moment(e?.student?.updatedAt).format(
-                    "MMM Do YYYY"
+                  const submittedDate = moment(e?.updateAt).format(
+                    "MMM Do YYYY hh:mm A"
                   );
 
                   return (

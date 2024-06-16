@@ -7,6 +7,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -21,7 +23,10 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <NextUIProvider navigate={router.push}>
-          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+          <NextThemesProvider {...themeProps}>
+            {children}
+            <ToastContainer />
+          </NextThemesProvider>
         </NextUIProvider>
       </QueryClientProvider>
     </SessionProvider>

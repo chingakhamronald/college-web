@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { InputField } from '@/components/custom-field';
-import { initialValues, validationSchema } from '@/config/constant';
-import { useMutationAssignProject } from '@/hook/useMutationAssignProject';
-import { IQuestionProps } from '@/types';
-import { Button, Card, Textarea } from '@nextui-org/react';
-import { Form, Formik } from 'formik';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+import { InputField } from "@/components/custom-field";
+import { initialValues, validationSchema } from "@/config/constant";
+import { useMutationAssignProject } from "@/hook/useMutationAssignProject";
+import { IQuestionProps } from "@/types";
+import { Button, Card, Textarea } from "@nextui-org/react";
+import { Form, Formik } from "formik";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 export const AssignmentForm = () => {
   const { data: session } = useSession();
   const { mutateAssignProject, isPendingAssignProject } =
-    useMutationAssignProject(session?.user?.id ?? '');
+    useMutationAssignProject(session?.user?.id ?? "");
 
   const router = useRouter();
   return (
@@ -26,7 +26,7 @@ export const AssignmentForm = () => {
           initialValues={initialValues}
           onSubmit={(e: IQuestionProps) => {
             mutateAssignProject(e);
-            router.push('/dashboard');
+            router.push("/dashboard");
           }}
         >
           {({ setFieldValue, values }) => (
@@ -38,8 +38,8 @@ export const AssignmentForm = () => {
                   fullWidth
                   variant="bordered"
                   className="mb-4"
-                  value={values.name}
-                  onChange={e => setFieldValue('name', e.target.value)}
+                  value={values.question}
+                  onChange={(e) => setFieldValue("question", e.target.value)}
                 />
                 <div className="flex flex-row gap-4">
                   <InputField id="subject" name="subject" label="Subject" />

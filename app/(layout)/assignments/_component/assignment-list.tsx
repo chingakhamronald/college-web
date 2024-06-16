@@ -1,5 +1,4 @@
 import {
-  Chip,
   Table,
   TableBody,
   TableCell,
@@ -11,6 +10,7 @@ import React from "react";
 import Link from "next/link";
 import { useQueryProjectByStudent } from "@/hook/useQueryProjectByStudent";
 import { useSession } from "next-auth/react";
+import moment from "moment";
 
 const AssignmentList = () => {
   const { data: session } = useSession();
@@ -21,19 +21,25 @@ const AssignmentList = () => {
     return <div>Loading...</div>;
   }
 
+  console.log({ dataProjectByStudent: dataProjectByStudent });
+
   return (
     <Table isStriped aria-label="Example static collection table">
       <TableHeader>
         <TableColumn>TEACHER</TableColumn>
         <TableColumn>SUBJECT</TableColumn>
+        <TableColumn>ASSIGN DATE</TableColumn>
         <TableColumn>ACTION</TableColumn>
       </TableHeader>
       <TableBody>
         {dataProjectByStudent?.map((e: any) => {
+          const date = moment(e?.createdAt).format("MMM Do YYYY");
+
           return (
             <TableRow key={e.id}>
               <TableCell>{e.teacher.name}</TableCell>
               <TableCell>{e.subject}</TableCell>
+              <TableCell>{date}</TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-4">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">

@@ -5,12 +5,12 @@
 2. Install Visual Studio Code
 3. Install Docker
 
-### Use the template with create-next-app
+### Use the this project
 
-To create a new project based on this template using `create-next-app`, run the following command:
+Clone a project from github to run the following command:
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
+https://github.com/chingakhamronald/college-web.git
 ```
 
 ### Install dependencies
@@ -20,7 +20,6 @@ You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
 ```bash
 npm install
 ```
-
 
 For this project, we use Prisma to connect to the database. so, we need to install Prisma, you can follow from here
 ```bash
@@ -158,7 +157,7 @@ services:
 ```
 and running this docker-compose.yml will create database container.
 
-### Run the development server
+### Following this command to run a project 
 
 ```bash
 npm run dev

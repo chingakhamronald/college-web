@@ -6,15 +6,18 @@ import { NextResponse } from 'next/server';
 import { options } from '../auth/[...nextauth]/options';
 
 export async function POST(req: Request, res: NextApiResponse) {
-  console.log('user data', req.body);
   const user = await req.json();
-  console.log('user: ', user);
 
   let result = await prisma.user.upsert({
     where: {
       email: user.email
     },
-    create: user,
+    create: {
+      email: user.email,
+      role: user.role,
+      password: user.password,
+      isverified: user.role === 'student' ? true : false
+    },
     update: user
   });
 

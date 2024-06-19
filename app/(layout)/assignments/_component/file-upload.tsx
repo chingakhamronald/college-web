@@ -12,6 +12,8 @@ export const FileUpload: FC<FileUploadProps> = ({ setFieldValue, name }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/pdf": [".pdf"],
+      "image/png": [".png"],
+      "image/jpeg": [".jpg", ".jpeg"],
     },
     onDrop: (acceptedFiles) => {
       setFieldValue(name, acceptedFiles[0]);
@@ -30,7 +32,7 @@ export const FileUpload: FC<FileUploadProps> = ({ setFieldValue, name }) => {
         <div {...getRootProps({ className: "dropzone" })}>
           <input {...getInputProps()} />
           <p>Drag 'n' drop some files here, or click to select files</p>
-          <em>(Only PDF files will be accepted)</em>
+          <em>(Only PDF files and images will be accepted)</em>
         </div>
       </section>
       <aside>

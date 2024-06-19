@@ -49,7 +49,13 @@ const ViewPdf = ({ params }: { params: any }) => {
           }
         />
       ) : (
-        <Image src={viewFileByStudent.path} />
+        <Image
+          src={
+            session?.user.role === "teacher"
+              ? viewFileByTeacher.path
+              : viewFileByStudent.path
+          }
+        />
       )}
     </div>
   );

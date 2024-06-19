@@ -19,7 +19,7 @@ CREATE TABLE "Teacher" (
     "department" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Teacher_pkey" PRIMARY KEY ("id")
 );
@@ -35,7 +35,7 @@ CREATE TABLE "Student" (
     "department" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Student_pkey" PRIMARY KEY ("id")
 );
@@ -48,6 +48,7 @@ CREATE TABLE "Doc" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "studentId" TEXT,
+    "projectId" TEXT,
 
     CONSTRAINT "Doc_pkey" PRIMARY KEY ("id")
 );
@@ -55,12 +56,12 @@ CREATE TABLE "Doc" (
 -- CreateTable
 CREATE TABLE "Project" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
+    "question" TEXT,
     "semester" TEXT,
     "subject" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "teacherId" TEXT,
+    "teacherId" TEXT NOT NULL,
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
 );
@@ -69,8 +70,10 @@ CREATE TABLE "Project" (
 CREATE TABLE "AssignProject" (
     "id" TEXT NOT NULL,
     "projectId" TEXT,
+    "status" BOOLEAN DEFAULT false,
     "studentId" TEXT,
-    "assignedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "assignedBy" TEXT NOT NULL,
 
     CONSTRAINT "AssignProject_pkey" PRIMARY KEY ("id")
@@ -86,19 +89,25 @@ CREATE UNIQUE INDEX "Teacher_userId_key" ON "Teacher"("userId");
 CREATE UNIQUE INDEX "Student_userId_key" ON "Student"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Doc_projectId_studentId_key" ON "Doc"("projectId", "studentId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "AssignProject_projectId_studentId_key" ON "AssignProject"("projectId", "studentId");
 
 -- AddForeignKey
-ALTER TABLE "Teacher" ADD CONSTRAINT "Teacher_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Teacher" ADD CONSTRAINT "Teacher_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Student" ADD CONSTRAINT "Student_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Student" ADD CONSTRAINT "Student_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Doc" ADD CONSTRAINT "Doc_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Project" ADD CONSTRAINT "Project_teacherId_fkey" FOREIGN KEY ("teacherId") REFERENCES "Teacher"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Doc" ADD CONSTRAINT "Doc_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Project" ADD CONSTRAINT "Project_teacherId_fkey" FOREIGN KEY ("teacherId") REFERENCES "Teacher"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AssignProject" ADD CONSTRAINT "AssignProject_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE SET NULL ON UPDATE CASCADE;

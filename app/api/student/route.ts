@@ -7,7 +7,6 @@ export async function GET(req: Request) {
   const department = searchParams.get('department');
 
   const semester = searchParams.get('semester');
-  console.log('department__________', department);
   if (department && semester) {
     let result = await prisma.student.findMany({
       where: {
@@ -15,10 +14,18 @@ export async function GET(req: Request) {
         semester: semester
       }
     });
-    console.log('res', result);
     return NextResponse.json(result);
   }
-  let result = await prisma.student.findMany();
-  console.log('res', result);
+  let result = await prisma.student.findMany({
+    include: {
+      user: {
+        select: {
+          email: true,
+          isverified: true,
+          role: true
+        }
+      }
+    }
+  });
   return NextResponse.json(result);
 }

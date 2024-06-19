@@ -27,8 +27,10 @@ export const options: NextAuthOptions = {
           console.log({ 'res...': res });
 
 
+
+
           if (res.status == 401) {
-            throw new Error("auth/login unauthorized.")
+            throw new Error("Invalid email or password")
           }
 
           const user = res.data
@@ -37,13 +39,13 @@ export const options: NextAuthOptions = {
 
 
           if (!user || !user.role) {
-            throw new Error("user or role not found.")
+            throw new Error("user or role not found")
           }
 
           return { ...user, password: null, role: user.role, id: user.id };
         }
         catch (error) {
-          console.log({ "error.....": error })
+          console.log({ "error.....": error });
           return null
         }
       }

@@ -6,6 +6,7 @@ import { useQueryUploadFileByStudent } from "@/hook/useQueryUploadFileByStudent"
 import { useSession } from "next-auth/react";
 import { useQueryUploadFileByTeacher } from "@/hook/useQueryUploadFileByTeacher";
 import { useGlobalStore } from "@/store/useStore";
+import { Image } from "@nextui-org/react";
 
 const ViewPdf = ({ params }: { params: any }) => {
   const { data: session } = useSession();
@@ -27,19 +28,29 @@ const ViewPdf = ({ params }: { params: any }) => {
     return <div>Loading...</div>;
   }
 
+  console.log({
+    viewFileByTeacher: viewFileByTeacher,
+    viewFileByStudent: viewFileByStudent,
+  });
+
   if (isError) {
     return <div className="flex justify-center">No File Found</div>;
   }
 
   return (
     <div>
-      <PdfViewer
-        url={
-          session?.user.role === "teacher"
-            ? viewFileByTeacher?.path
-            : viewFileByStudent?.path
-        }
-      />
+      {viewFileByTeacher.fileType === "application/pdf" ||
+      viewFileByStudent.fileType === "application/pdf" ? (
+        <PdfViewer
+          url={
+            session?.user.role === "teacher"
+              ? viewFileByTeacher?.path
+              : viewFileByStudent?.path
+          }
+        />
+      ) : (
+        <Image src={viewFileByStudent.path} />
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { Form, Formik } from "formik";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { FileUpload } from "./file-upload";
 
 export const AssignmentForm = () => {
   const { data: session } = useSession();
@@ -25,7 +26,14 @@ export const AssignmentForm = () => {
           validationSchema={validationSchema}
           initialValues={initialValues}
           onSubmit={(e: IQuestionProps) => {
-            mutateAssignProject(e);
+            let formData = new FormData();
+
+            formData.append("file", e.file);
+            formData.append("subject", e.subject);
+            formData.append("semester", e.semester);
+            formData.append("question", e.question);
+
+            mutateAssignProject(formData);
             router.push("/dashboard");
           }}
         >
@@ -41,6 +49,7 @@ export const AssignmentForm = () => {
                   value={values.question}
                   onChange={(e) => setFieldValue("question", e.target.value)}
                 />
+                <FileUpload setFieldValue={setFieldValue} name="file" />
                 <div className="flex flex-row gap-4">
                   <InputField id="subject" name="subject" label="Subject" />
                   <InputField id="semester" name="semester" label="Semester" />

@@ -8,6 +8,7 @@ export type IQuestionProps = {
   question: string;
   semester: string;
   subject: string
+  file: any
 }
 
 export type ITeacherProps = {

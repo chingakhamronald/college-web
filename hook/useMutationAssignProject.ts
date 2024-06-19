@@ -7,7 +7,7 @@ export const useMutationAssignProject = (teacherId: string) => {
 
   const { mutate: mutateAssignProject, isPending: isPendingAssignProject } = useMutation({
     mutationKey: ['AssignProject'],
-    mutationFn: async (postdata: IQuestionProps) => {
+    mutationFn: async (postdata: any) => {
       const res = await axios.post(`/api/project/byTeacherId/${teacherId}`, postdata)
 
       console.log({ 'res...': res.data });

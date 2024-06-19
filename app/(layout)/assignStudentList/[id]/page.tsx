@@ -12,12 +12,14 @@ import {
   Card,
   CardBody,
   Button,
+  Image,
 } from "@nextui-org/react";
 import { useQueryProjectById } from "@/hook/useQueryProjectById";
 import moment from "moment";
 import { useMutationAssignProjectByTeacher } from "@/hook/useMutationAssignProjectByTeacher";
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/useStore";
+import { PdfViewer } from "../../assignments/_component/pdf-viewer";
 
 const AssignStudentList = ({ params }: { params: { id: string } }) => {
   const { setProjectId } = useGlobalStore();
@@ -61,6 +63,13 @@ const AssignStudentList = ({ params }: { params: { id: string } }) => {
                 <p>Subject: {dataProjectById.subject}</p>
                 <p>Semester: {dataProjectById.semester}</p>
                 <p>Question: {dataProjectById.question}</p>
+                {dataProjectById?.fileType === "application/pdf" ? (
+                  <div>
+                    <PdfViewer url={dataProjectById?.path} />
+                  </div>
+                ) : (
+                  <Image src={dataProjectById?.path} />
+                )}
               </CardBody>
             </Card>
           </div>

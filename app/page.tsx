@@ -3,16 +3,9 @@
 import { InputField } from "@/components/custom-field";
 import { loginValidationSchema } from "@/config/constant";
 import { Button } from "@nextui-org/button";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/react";
 import { Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
 
 const Login = () => {
   const router = useRouter();

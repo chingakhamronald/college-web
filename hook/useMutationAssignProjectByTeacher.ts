@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const useMutationAssignProjectByTeacher = (projectId: string) => {
   const queryClient = useQueryClient();
@@ -18,6 +19,7 @@ export const useMutationAssignProjectByTeacher = (projectId: string) => {
 
       if (data) {
         queryClient.invalidateQueries({ queryKey: ['ProjectById'] })
+        toast.success('Project assigned successfully')
       }
     }
   },)

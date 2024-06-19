@@ -5,12 +5,12 @@ import * as Yup from "yup";
 export const initialValues: IQuestionProps = {
   question: "",
   semester: "",
-  subject: ""
+  subject: "",
+  file: ""
 }
 
 
 export const validationSchema = Yup.object().shape({
-  question: Yup.string().required("Question is required"),
   semester: Yup.string().required("Semester is required"),
   subject: Yup.string().required("Subject is required")
 })

@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody, Image } from "@nextui-org/react";
 import React, { useState } from "react";
 import { StudentForm } from "../../assignments/_component/student-form";
 import { useQueryProjectById } from "@/hook/useQueryProjectById";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { PdfViewer } from "../../assignments/_component/pdf-viewer";
 
 const ViewAndUpload = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
@@ -40,6 +41,13 @@ const ViewAndUpload = ({ params }: { params: { id: string } }) => {
                 <p>Subject: {dataProjectById?.subject}</p>
                 <p>Semester: {dataProjectById?.semester}</p>
                 <p>Question: {dataProjectById?.question}</p>
+                {dataProjectById?.fileType === "application/pdf" ? (
+                  <div>
+                    <PdfViewer url={dataProjectById?.path} />
+                  </div>
+                ) : (
+                  <Image src={dataProjectById?.path} />
+                )}
               </CardBody>
             </Card>
           </div>

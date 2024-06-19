@@ -64,6 +64,7 @@ export async function POST(
         semester: semester ?? '',
         subject: subject ?? '',
         path: res.Location ?? '',
+        fileType: type ?? '',
         teacherId: teacher.id
       }
     });
@@ -86,7 +87,7 @@ async function uploadFile(dataBuffer: Buffer, fileName: string, type: string) {
     .upload({
       Bucket: 'mitnewbucket',
       Body: dataBuffer,
-      Key: `${fileName}-${Date.now()}`,
+      Key: `${Date.now()}-${fileName}`,
       ACL: 'public-read' as ObjectCannedACL
     })
     .promise();

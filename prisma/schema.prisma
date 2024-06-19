@@ -58,6 +58,7 @@ model Doc {
   id        String   @id @default(uuid())
   docName   String?
   path      String?
+  fileType  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   student   Student? @relation(fields: [studentId], references: [id])
@@ -74,6 +75,7 @@ model Project {
   path          String?
   semester      String?
   subject       String?
+  fileType      String?
   assignProject AssignProject[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt

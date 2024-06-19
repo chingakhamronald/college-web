@@ -6,11 +6,9 @@ import { useMutationTeacher } from "@/hook/useMutationTeacher";
 import { useQueryUserById } from "@/hook/useQueryUserById";
 import { Button, Card, Select, SelectItem } from "@nextui-org/react";
 import { Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const Teacher = ({ params }: { params: { id: string } }) => {
-  const router = useRouter();
   const { userIdData, isLoadingUserData } = useQueryUserById(params.id);
 
   const { mutateTeacher, isLoadingTeacher } = useMutationTeacher(params.id);
@@ -20,8 +18,8 @@ const Teacher = ({ params }: { params: { id: string } }) => {
   console.log({ userIdData: userIdData });
 
   return (
-    <div className="mt-4">
-      <Card className="p-6" shadow="sm">
+    <div className="flex h-screen justify-center items-center">
+      <Card className="p-10 flex-1 mx-56" shadow="sm">
         <h1 className="text-3xl font-bold text-center mb-5 capitalize">
           Update Profile {userIdData?.role}
         </h1>
@@ -36,7 +34,6 @@ const Teacher = ({ params }: { params: { id: string } }) => {
           }}
           onSubmit={(e: any) => {
             mutateTeacher(e);
-            router.push("/");
           }}
         >
           {({ setFieldValue, values }) => (

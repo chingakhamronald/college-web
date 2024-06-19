@@ -6,11 +6,9 @@ import { useMutationStudent } from "@/hook/useMutationStudent";
 import { useQueryUserById } from "@/hook/useQueryUserById";
 import { Button, Card, Select, SelectItem } from "@nextui-org/react";
 import { Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const Student = ({ params }: { params: { id: string } }) => {
-  const router = useRouter();
   const { userIdData, isLoadingUserData } = useQueryUserById(params.id);
 
   console.log({ "params....": params.id });
@@ -20,8 +18,8 @@ const Student = ({ params }: { params: { id: string } }) => {
   if (isLoadingUserData) return <div>Loading...</div>;
 
   return (
-    <div className="mt-4">
-      <Card className="p-6" shadow="sm">
+    <div className="flex h-screen">
+      <Card className="p-10 flex-1 mx-56" shadow="sm">
         <h1 className="text-3xl font-bold text-center mb-5 capitalize">
           Update Profile {userIdData?.role}
         </h1>
@@ -40,7 +38,6 @@ const Student = ({ params }: { params: { id: string } }) => {
             console.log({ "e...": e });
 
             mutateStudent(e);
-            router.push("/");
           }}
         >
           {({ setFieldValue, values }) => (

@@ -58,9 +58,8 @@ export async function POST(
 
     if (!project || !student) {
       return NextResponse.json({
-        error: `Project ${project?.question ?? ''} or Student ${
-          student?.name ?? ''
-        } not found`
+        error: `Project ${project?.question ?? ''} or Student ${student?.name ?? ''
+          } not found`
       });
     }
     const doc = await prisma.doc.findFirst({
@@ -81,6 +80,7 @@ export async function POST(
         docName: docName ?? '',
         path: res.Location,
         projectId,
+        fileType: type ?? "",
         studentId: student.id
       }
     });
@@ -111,7 +111,7 @@ async function uploadFile(dataBuffer: Buffer, fileName: string, type: string) {
     .upload({
       Bucket: 'mitnewbucket',
       Body: dataBuffer,
-      Key: `${fileName}-${Date.now()}`,
+      Key: `${Date.now()}-${fileName}`,
       ACL: 'public-read' as ObjectCannedACL
     })
     .promise();

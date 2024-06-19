@@ -11,28 +11,26 @@ export async function POST(req: Request) {
     await prisma.$connect();
 
     const user = await prisma.user.findUnique({
-      where: {
-        email: email
-      }
+      where: { email: email }
     });
-    if (user?.isverified === false) {
-      return NextResponse.json(
-        { message: 'Not Verified!, Ask to approve on Administration' },
-        {
-          status: 401
-        }
-      );
-    }
 
     if (!user) {
-      return NextResponse.json(
-        { mesaage: 'Not Found!' },
-        {
-          status: 401
-        }
-      );
+      return NextResponse.json({ message: 'User not found!' }, { status: 401 });
     }
 
+    if (user.isverified === false) {
+      return NextResponse.json({
+        message: 'Account not verified. Please contact administration.'
+      });
+    }
+
+    // Assuming password check logic is here, e.g., bcrypt comparison
+    // if (!bcrypt.compareSync(password, user.password)) {
+    //   return NextResponse.json(
+    //     { message: 'Invalid email or password.' },
+    //     { status: 401 }
+    //   );
+    // }
     if (user?.password !== password) {
       return NextResponse.json(
         { mesaage: 'Wrong Password!' },
@@ -44,9 +42,12 @@ export async function POST(req: Request) {
 
     console.log('password ', password);
     return NextResponse.json(user, { status: 200 });
-  } catch (e) {
-    console.error({ 'error......login': e });
-    return NextResponse.json({ status: 'fail', error: e });
+  } catch (e: any) {
+    console.error(e);
+    return NextResponse.json(
+      { message: e.message || 'An error occurred' },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

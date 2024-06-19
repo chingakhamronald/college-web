@@ -3,10 +3,20 @@
 import { InputField } from "@/components/custom-field";
 import { loginValidationSchema } from "@/config/constant";
 import { Button } from "@nextui-org/button";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
 import { Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <div className="flex flex-1 justify-center items-center">
@@ -22,6 +32,8 @@ const Login = () => {
               email: values.email,
               password: values.password,
             });
+
+            console.log({ "result..": result });
 
             if (result?.error) {
               setFieldError("email", "Invalid username or password.");
@@ -56,6 +68,14 @@ const Login = () => {
 
             <Button type="submit" fullWidth color="primary">
               SignIn
+            </Button>
+            <h1 className="text-center text-lg py-2">OR</h1>
+            <Button
+              fullWidth
+              color="primary"
+              onClick={() => router.push("/register")}
+            >
+              Create New Account
             </Button>
           </Form>
         </Formik>

@@ -109,7 +109,7 @@ async function uploadFile(dataBuffer: Buffer, fileName: string, type: string) {
   const s3 = new S3();
   const uploadResultw = await s3
     .upload({
-      Bucket: 'mitnewbucket',
+      Bucket: 'nganthoiproject',
       Body: dataBuffer,
       Key: `${Date.now()}-${fileName}`,
       ACL: 'public-read' as ObjectCannedACL

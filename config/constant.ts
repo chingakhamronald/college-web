@@ -21,8 +21,11 @@ export const loginValidationSchema = Yup.object({
 });
 
 export const departmentList: { key: string, label: string }[] = [
-  { key: "CSE", label: "Computer Science Engineering Department" },
-  { key: "CE", label: "Civil Engineering Department" },
-  { key: "ME", label: "Mechanical Engineering Department" },
+  // { key: "CSE", label: "Computer Science Engineering Department" },
+  // { key: "CE", label: "Civil Engineering Department" },
+  // { key: "ME", label: "Mechanical Engineering Department" },
+  { key: "DIT", label: "Department Information Technology" },
+  { key: "PGDCA", label: "Post Graduate Diploma in Computer Application" },
+  { key: "DCA", label: "Diploma in Computer Application" },
 
 ];

@@ -2,7 +2,6 @@ import { NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../../config/prisma/db';
 
-import { ObjectCannedACL, S3Client } from '@aws-sdk/client-s3';
 
 export async function GET(req: Request, { params }: { params: any }) {
   const { projectId, studentId } = params;
